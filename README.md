@@ -8,6 +8,8 @@ Golang + WebSocket + RethinkDB
 
 ReactJS based app.
 
+Created with `create-react-app`, so make sure to yarn add missing things.
+
 ### General instructions
 
 ```
