@@ -1,20 +1,19 @@
 import React, { Component } from 'react';
+import { createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import ReduxThunk from 'redux-thunk';
 import './App.css';
-import BigCalendar from 'react-big-calendar';
-import moment from 'moment';
+
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
-// import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
-
 import TopMenu from './components/common/TopMenu'
 import LeftMenu from './components/common/LeftMenu'
+import Calendar from './components/schedule/Calendar'
 // import Homepage from './components/homepage/Homepage'
 
-//XXX: DUMMY DATA
-import events from './dummy/events';
+import reducers from './reducers';
 
-BigCalendar.momentLocalizer(moment); // or globalizeLocalizer
+import batoryTheme from './themes/batory'
 
 const style = {
   mainContent: {
@@ -32,27 +31,25 @@ const style = {
 
 class App extends Component {
   render() {
+    const store = createStore(
+      reducers,
+      {}, //default state
+      applyMiddleware(ReduxThunk)
+    );
+    // console.log(batoryTheme);
+    // console.log(getMuiTheme(batoryTheme));
     return (
-      // <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
-      <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
-        <div>
-          <TopMenu />
-          <LeftMenu />
-          <div style={style.mainContent}>
-            <BigCalendar
-              selectable
-              events={events}
-              defaultView='week'
-              defaultDate={new Date(2017, 9, 12)}
-              onSelectEvent={event => alert(event.title)}
-              onSelectSlot={(slotInfo) => alert(
-                `selected slot: \n\nstart ${slotInfo.start.toLocaleString()} ` +
-                `\nend: ${slotInfo.end.toLocaleString()}`
-              )}
-            />
+      <Provider store={store}>
+        <MuiThemeProvider muiTheme={getMuiTheme(batoryTheme)}>
+          <div>
+            <TopMenu />
+            <LeftMenu />
+            <div style={style.mainContent}>
+              <Calendar />
+            </div>
           </div>
-        </div>
-      </MuiThemeProvider>
+        </MuiThemeProvider>
+      </Provider>
     );
   }
 }

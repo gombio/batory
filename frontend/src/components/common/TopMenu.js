@@ -1,4 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
+import { projectScopeChange } from '../../actions';
 
 // ToolBar
 import {Toolbar, ToolbarGroup } from 'material-ui/Toolbar';
@@ -10,32 +13,21 @@ import AppBar from 'material-ui/AppBar';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 
-const style = {
-  appBar: {
-    // position: 'fixed',
-  },
-}
-
 class TopMenu extends React.Component {
-  state = {
-    value: 1
-  }
-
   handleChange(event, index, value) {
-    console.log(event, index, value);
-    this.setState({value});
+    this.props.projectScopeChange(value);
   };
 
   render() {
     return (
-      <AppBar style={style.appBar}>
+      <AppBar>
         <Toolbar style={{backgroundColor: 'transparent'}}>
           <ToolbarGroup firstChild={true}>
-            <DropDownMenu value={this.state.value} onChange={this.handleChange.bind(this)}>
-              <MenuItem value={1} primaryText="All projects" />
-              <MenuItem value={2} primaryText="Project Foo" />
-              <MenuItem value={3} primaryText="Project Bar" />
-              <MenuItem value={4} primaryText="Project Baz" />
+            <DropDownMenu value={this.props.projectScope} onChange={this.handleChange.bind(this)}>
+              <MenuItem value={null} primaryText="All projects" />
+              <MenuItem value={"projectFoo"} primaryText="Project Foo" />
+              <MenuItem value={"projectBar"} primaryText="Project Bar" />
+              <MenuItem value={"projectBaz"} primaryText="Project Baz" />
             </DropDownMenu>
           </ToolbarGroup>
         </Toolbar>
@@ -44,4 +36,14 @@ class TopMenu extends React.Component {
   }
 }
 
-export default TopMenu;
+const mapStateToProps = state => {
+  const { projectScope } = state;
+
+  return {
+    projectScope,
+  };
+};
+
+export default connect(mapStateToProps, {
+  projectScopeChange,
+})(TopMenu);
