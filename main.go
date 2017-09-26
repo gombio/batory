@@ -4,6 +4,8 @@ import (
 	"log"
 	"net/http"
 	"os"
+
+	"github.com/gombio/batory/ws"
 )
 
 func validateFrontend() {
@@ -17,6 +19,11 @@ func main() {
 	log.Print("Starting server...")
 
 	http.Handle("/", http.FileServer(http.Dir("frontend/build/"))) //TODO: Add option to not to serve Frontend by Go
+
+	log.Print("Setting up WebSocket Router...")
+	router := ws.NewRouter()
+
+	http.Handle("/ws", router)
 
 	// http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 	// 	http.ServeFile(w, r, "frontend/build/index.html")
