@@ -2,6 +2,24 @@
 
 
 [[projects]]
+  name = "github.com/GoRethink/gorethink"
+  packages = ["."]
+  revision = "7f5bdfd858bb064d80559b2a32b86669c5de5d3b"
+  version = "v3.0.5"
+
+[[projects]]
+  name = "github.com/cenkalti/backoff"
+  packages = ["."]
+  revision = "61153c768f31ee5f130071d08fc82b85208528de"
+  version = "v1.1.0"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/golang/protobuf"
+  packages = ["proto"]
+  revision = "130e6b02ab059e7b717a096f397c5b60111cae74"
+
+[[projects]]
   name = "github.com/google/uuid"
   packages = ["."]
   revision = "064e2069ce9c359c118179501254f67d7d37ba24"
@@ -13,9 +31,51 @@
   revision = "ea4d1f681babbce9545c9c5f3d5194a789c89f5b"
   version = "v1.2.0"
 
+[[projects]]
+  branch = "master"
+  name = "github.com/hailocab/go-hostpool"
+  packages = ["."]
+  revision = "e80d13ce29ede4452c43dea11e79b9bc8a15b478"
+
+[[projects]]
+  name = "github.com/sirupsen/logrus"
+  packages = ["."]
+  revision = "f006c2ac4710855cf0f916dd6b77acf6b048dc6e"
+  version = "v1.0.3"
+
+[[projects]]
+  branch = "master"
+  name = "golang.org/x/crypto"
+  packages = ["pbkdf2","ssh/terminal"]
+  revision = "9419663f5a44be8b34ca85f08abc5fe1be11f8a3"
+
+[[projects]]
+  branch = "master"
+  name = "golang.org/x/net"
+  packages = ["context"]
+  revision = "0a9397675ba34b2845f758fe3cd68828369c6517"
+
+[[projects]]
+  branch = "master"
+  name = "golang.org/x/sys"
+  packages = ["unix","windows"]
+  revision = "314a259e304ff91bd6985da2a7149bbf91237993"
+
+[[projects]]
+  branch = "v2.0.0"
+  name = "gopkg.in/fatih/pool.v2"
+  packages = ["."]
+  revision = "6e328e67893eb46323ad06f0e92cb9536babbabc"
+
+[[projects]]
+  name = "gopkg.in/gorethink/gorethink.v3"
+  packages = ["encoding","ql2","types"]
+  revision = "7f5bdfd858bb064d80559b2a32b86669c5de5d3b"
+  version = "v3.0.5"
+
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "3f3ef3a8ed7f17b770b13a128bac71c8b5811b4e93baf9ce97640e9466b5d380"
+  inputs-digest = "0f7d490c6b104d790373f215fd8b9ed85047b600274f70ac87d710618485ff48"
   solver-name = "gps-cdcl"
   solver-version = 1
