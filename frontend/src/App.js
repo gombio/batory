@@ -12,8 +12,9 @@ import Calendar from './components/schedule/Calendar'
 // import Homepage from './components/homepage/Homepage'
 
 import reducers from './reducers';
-
 import batoryTheme from './themes/batory'
+
+import WebSocketProvider from './components/WebSocket/Provider'
 
 const style = {
   mainContent: {
@@ -40,15 +41,17 @@ class App extends Component {
     // console.log(getMuiTheme(batoryTheme));
     return (
       <Provider store={store}>
-        <MuiThemeProvider muiTheme={getMuiTheme(batoryTheme)}>
-          <div>
-            <TopMenu />
-            <LeftMenu />
-            <div style={style.mainContent}>
-              <Calendar />
+        <WebSocketProvider>
+          <MuiThemeProvider muiTheme={getMuiTheme(batoryTheme)}>
+            <div>
+              <TopMenu />
+              <LeftMenu />
+              <div style={style.mainContent}>
+                <Calendar />
+              </div>
             </div>
-          </div>
-        </MuiThemeProvider>
+          </MuiThemeProvider>
+        </WebSocketProvider>
       </Provider>
     );
   }

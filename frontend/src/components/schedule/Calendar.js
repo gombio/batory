@@ -9,10 +9,11 @@ BigCalendar.momentLocalizer(moment); // or globalizeLocalizer
 
 class Calendar extends React.Component {
   render() {
+    console.log(this.props.schedules);
     return (
       <BigCalendar
         selectable
-        events={this.props.events}
+        events={this.props.schedules}
         defaultView='week'
         defaultDate={new Date(2017, 9, 12)}
         onSelectEvent={event => alert(event.title)}
@@ -26,10 +27,10 @@ class Calendar extends React.Component {
 }
 
 const mapStateToProps = state => {
-  const { events } = state;
+  const { schedules } = state;
 
   return {
-    events,
+    schedules,
   };
   // const employees = _.map(state.employees, (val, uid) => {
   //   return {

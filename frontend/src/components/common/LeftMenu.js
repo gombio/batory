@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 //TopBar
 import Drawer from 'material-ui/Drawer';
@@ -15,12 +16,19 @@ import ErrorIcon from 'material-ui/svg-icons/alert/error';
 import ExitIcon from 'material-ui/svg-icons/action/exit-to-app';
 import SettingsIcon from 'material-ui/svg-icons/action/settings';
 import HealingIcon from 'material-ui/svg-icons/image/healing';
+import LightBulb from 'material-ui/svg-icons/action/lightbulb-outline';
 
 class LeftMenu extends React.Component {
+  isConnected() {
+    let color = (this.props.connected) ? 'ffff00' : 'dddddd';
+
+    return (<div>Batory v.0.0.1 <LightBulb color={color} /></div>);
+  }
+
   render() {
     return (
       <Drawer open={true}>
-        <AppBar title="Batory v.0.0.1" showMenuIconButton={false} titleStyle={{color: 'white'}} />
+        <AppBar title={this.isConnected()} showMenuIconButton={false} titleStyle={{color: 'white'}} />
         <Menu>
           <MenuItem primaryText="Home" leftIcon={<HomeIcon />} />
           <Divider />
@@ -38,4 +46,14 @@ class LeftMenu extends React.Component {
   }
 }
 
-export default LeftMenu;
+const mapStateToProps = state => {
+  const { connected } = state;
+
+  return {
+    connected,
+  };
+};
+
+export default connect(mapStateToProps, {
+  //
+})(LeftMenu);
