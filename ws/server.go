@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/gombio/batory/db"
 	"github.com/gorilla/websocket"
 )
 
@@ -18,7 +19,8 @@ var upgrader = websocket.Upgrader{
 
 // Server handles WebSocket event routing to particular handlers
 type Server struct {
-	rules map[string]Handler
+	rules   map[string]Handler
+	rethink *db.Rethinkdb
 }
 
 func (s Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
@@ -28,7 +30,7 @@ func (s Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprint(w, err.Error())
 		return
 	}
-	session := NewSession() //start new client session
+	session := NewSession(s.rethink) //start new client session
 	log.Print("Connected: ", session.id)
 	defer session.Close()       //defer session termination
 	go s.Write(socket, session) //start write channel handler
@@ -54,21 +56,22 @@ func (s Server) Read(socket *websocket.Conn, session *Session) {
 }
 
 func (s Server) Write(socket *websocket.Conn, session *Session) {
-	// for msg := range session.send {
-	// 	if err := session.socket.WriteJSON(msg); nil != err {
-	// 		break
-	// 	}
-	// }
-	// log.Print("Disconnecting from Writer...")
-	// session.socket.Close()
+	for msg := range session.Send {
+		if err := socket.WriteJSON(msg); nil != err {
+			break
+		}
+	}
+	log.Print("Disconnecting from Writer...")
+	socket.Close()
 }
 
 func (s *Server) Handle(name string, handler Handler) {
 	s.rules[name] = handler
 }
 
-func NewServer() *Server {
+func NewServer(rethink *db.Rethinkdb) *Server {
 	return &Server{
-		rules: make(map[string]Handler),
+		rules:   make(map[string]Handler),
+		rethink: rethink,
 	}
 }

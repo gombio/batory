@@ -1,14 +1,14 @@
 package db
 
 type Project struct {
-	Project string `gorethink:"project"`
+	Account string `gorethink:"account"`
 	ID      string `gorethink:"id,omitempty"`
 	Name    string `gorethink:"name"`
 }
 
-func NewProject(project string, id string, name string) Project {
+func NewProject(account string, id string, name string) Project {
 	return Project{
-		Project: project,
+		Account: account,
 		ID:      id,
 		Name:    name,
 	}

@@ -40,9 +40,9 @@ func main() {
 	http.Handle("/", http.FileServer(http.Dir("frontend/build/"))) //TODO: Add option to not to serve Frontend by Go
 
 	log.Print("Setting up WebSocket server...")
-	server := ws.NewServer()
+	server := ws.NewServer(rethink)
 	//Set up handlers
-	server.Handle("events.list", handlers.EventsList)
+	server.Handle("schedules.list", handlers.SchedulesList)
 
 	log.Print("Starting WebSocket server...")
 	http.Handle("/ws", server)
