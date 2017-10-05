@@ -31,7 +31,7 @@ func (s Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	session := NewSession(s.rethink) //start new client session
-	log.Print("Connected: ", session.id)
+	log.Print("Connected: ", session.ID)
 	defer session.Close()       //defer session termination
 	go s.Write(socket, session) //start write channel handler
 	s.Read(socket, session)     //start read channel handler
@@ -41,14 +41,26 @@ func (s Server) Read(socket *websocket.Conn, session *Session) {
 	var message Message
 	for {
 		if err := socket.ReadJSON(&message); nil != err {
-			log.Print(session.id, ": ", err.Error())
+			log.Print(session.ID, ": ", err.Error())
 			break
 		}
-		log.Print(session.id, ": ", message)
-		if handler, found := s.rules[message.Type]; found {
-			handler(session, message.Data)
-		} else {
-			log.Print("UNKNOWN MESSAGE TYPE: ", message.Type)
+
+		log.Print(session.Identifier(), ": ", message.Type)
+
+		//If Session has no user it means we're not authenticated
+		if !session.IsAuthenticated {
+			//test if it is auth.login action
+			if "auth.login" != message.Type {
+				s.rules["auth.401"](session, message.Data) //if it's not, send auth.required message
+			} else {
+				s.rules["auth.login"](session, message.Data) //otherwise, try to login user
+			}
+		} else { //Otherwise if session has User filled, just continue with other handlers
+			if handler, found := s.rules[message.Type]; found {
+				handler(session, message.Data)
+			} else {
+				log.Print("UNKNOWN MESSAGE TYPE: ", message.Type) //XXX: remove it as it just produces garbage in the output
+			}
 		}
 	}
 	log.Print("Disconnecting from Reader...")

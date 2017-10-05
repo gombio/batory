@@ -42,6 +42,10 @@ func main() {
 	log.Print("Setting up WebSocket server...")
 	server := ws.NewServer(rethink)
 	//Set up handlers
+	//Authentication
+	server.Handle("auth.401", handlers.Auth401)
+	server.Handle("auth.login", handlers.AuthLogin)
+	//Schedules
 	server.Handle("schedules.list", handlers.SchedulesList)
 
 	log.Print("Starting WebSocket server...")

@@ -38,6 +38,12 @@
   revision = "e80d13ce29ede4452c43dea11e79b9bc8a15b478"
 
 [[projects]]
+  branch = "master"
+  name = "github.com/mitchellh/mapstructure"
+  packages = ["."]
+  revision = "d0303fe809921458f417bcf828397a65db30a7e4"
+
+[[projects]]
   name = "github.com/sirupsen/logrus"
   packages = ["."]
   revision = "f006c2ac4710855cf0f916dd6b77acf6b048dc6e"
@@ -76,6 +82,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "0f7d490c6b104d790373f215fd8b9ed85047b600274f70ac87d710618485ff48"
+  inputs-digest = "b21077e7e5d3427d8672af36d20f26fed9a80367b8e214511106fb9b6518db69"
   solver-name = "gps-cdcl"
   solver-version = 1
