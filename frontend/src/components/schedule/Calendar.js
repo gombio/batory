@@ -9,7 +9,6 @@ BigCalendar.momentLocalizer(moment); // or globalizeLocalizer
 
 class Calendar extends React.Component {
   render() {
-    console.log(this.props.schedules);
     return (
       <BigCalendar
         selectable

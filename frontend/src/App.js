@@ -10,6 +10,7 @@ import TopMenu from './components/common/TopMenu'
 import LeftMenu from './components/common/LeftMenu'
 import Calendar from './components/schedule/Calendar'
 // import Homepage from './components/homepage/Homepage'
+import Authentication from './components/auth/Authentication'
 
 import reducers from './reducers';
 import batoryTheme from './themes/batory'
@@ -32,9 +33,12 @@ const style = {
 
 class App extends Component {
   render() {
+    //XXX: This may be totally stupid!
+    // const ws = new WebSocket('ws://localhost:8081/ws');
     const store = createStore(
       reducers,
       {}, //default state
+      // applyMiddleware(ReduxThunk.withExtraArgument({ ws }))
       applyMiddleware(ReduxThunk)
     );
     // console.log(batoryTheme);
@@ -43,13 +47,15 @@ class App extends Component {
       <Provider store={store}>
         <WebSocketProvider>
           <MuiThemeProvider muiTheme={getMuiTheme(batoryTheme)}>
-            <div>
-              <TopMenu />
-              <LeftMenu />
-              <div style={style.mainContent}>
-                <Calendar />
+            <Authentication>
+              <div>
+                <TopMenu />
+                <LeftMenu />
+                <div style={style.mainContent}>
+                  <Calendar />
+                </div>
               </div>
-            </div>
+            </Authentication>
           </MuiThemeProvider>
         </WebSocketProvider>
       </Provider>
