@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import { connected, disconnected, scheduleAdd } from '../../actions';
 
 import Login from './Login'
 

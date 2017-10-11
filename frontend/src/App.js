@@ -33,13 +33,10 @@ const style = {
 
 class App extends Component {
   render() {
-    //XXX: This may be totally stupid!
-    // const ws = new WebSocket('ws://localhost:8081/ws');
     const store = createStore(
       reducers,
       {}, //default state
-      // applyMiddleware(ReduxThunk.withExtraArgument({ ws }))
-      applyMiddleware(ReduxThunk)
+      applyMiddleware(ReduxThunk.withExtraArgument({})) //XXX: We'll add here services with actions!
     );
     // console.log(batoryTheme);
     // console.log(getMuiTheme(batoryTheme));

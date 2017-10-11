@@ -2,6 +2,7 @@ import { EventEmitter } from 'events';
 
 class Socket {
   constructor(ws = new WebSocket(), ee = new EventEmitter()) {
+    this.handlers = [];
     this.ws = ws;
     this.ee = ee;
 
@@ -11,6 +12,21 @@ class Socket {
   }
 
   on(name, fn) {
+    //Prevent binding one handler multiple times
+    let found = false;
+    this.handlers.map((handlerName) => {
+      if (name === handlerName) {
+        found = true;
+        return handlerName;
+      }
+      return handlerName;
+    });
+
+    if (found) {
+      return;
+    }
+
+    this.handlers.push(name);
     this.ee.on(name, fn);
   }
 

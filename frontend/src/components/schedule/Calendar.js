@@ -3,12 +3,18 @@ import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
 
 import { connect } from 'react-redux';
-import _ from 'lodash';
+
+import { schedulesFetch } from '../../actions';
 
 BigCalendar.momentLocalizer(moment); // or globalizeLocalizer
 
 class Calendar extends React.Component {
+  componentDidMount() {
+    this.props.schedulesFetch();
+  }
+
   render() {
+    console.log(this.props.schedules);
     return (
       <BigCalendar
         selectable
@@ -31,16 +37,8 @@ const mapStateToProps = state => {
   return {
     schedules,
   };
-  // const employees = _.map(state.employees, (val, uid) => {
-  //   return {
-  //     ...val,
-  //     uid: uid,
-  //   };
-  // });
-  //
-  // return { employees };
 };
 
 export default connect(mapStateToProps, {
-  // employeesFetch,
+  schedulesFetch,
 })(Calendar);

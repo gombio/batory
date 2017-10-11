@@ -1,12 +1,7 @@
 import {
-  PROJECT_SCOPE_CHANGED,
+  // PROJECT_SCOPE_CHANGED,
   SCHEDULE_ADD,
 } from '../actions/types';
-
-import _ from 'lodash';
-
-//XXX: DUMMY DATA
-import events from '../dummy/events';
 
 const INITIAL_STATE = [];
 
@@ -27,6 +22,4 @@ export default (state = INITIAL_STATE, action) => {
     default:
       return state;
   }
-
-  return state;
 };
