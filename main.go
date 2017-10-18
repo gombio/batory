@@ -47,6 +47,7 @@ func main() {
 	server.Handle("auth.login", handlers.AuthLogin)
 	//Schedules
 	server.Handle("schedules.list", handlers.SchedulesList)
+	server.Handle("schedules.create", handlers.SchedulesCreate)
 
 	log.Print("Starting WebSocket server...")
 	http.Handle("/ws", server)

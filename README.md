@@ -49,3 +49,8 @@ Successful authentication:
 ```
 {"type":"auth.login","data":{"login":"john@example.com","password":"test123"}}
 ```
+
+## Creating Schedule
+```
+{"type":"schedules.create","data":{"project":"youdash","person":"john@example.com","start":"2017-10-18 05:30:00","end":"2017-10-18 08:00:00"}}
+```

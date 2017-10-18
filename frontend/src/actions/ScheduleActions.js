@@ -16,3 +16,15 @@ export const scheduleAdd = (schedule) => {
     payload: schedule,
   };
 };
+
+export const schedulesCreate = (project, person, start, end) => {
+  return (dispatch, getState, services) => {
+    const { socket } = services;
+    socket.emit('schedules.create', {
+      project: project,
+      person: person,
+      start: start.toISOString(),
+      end: end.toISOString(),
+    });
+  }
+}
